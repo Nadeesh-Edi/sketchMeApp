@@ -19,6 +19,11 @@ const customLightTheme = {
     secondaryContainer: '#FFCCBC',
     tertiary: '#FF5722',
     tertiaryContainer: '#FFCCBC',
+    onSurface: '#1C1B1F',
+    onSurfaceVariant: '#49454F',
+    onPrimary: '#FFFFFF',
+    onPrimaryContainer: '#3E2723',
+    onBackground: '#1C1B1F',
   },
 };
 
@@ -32,6 +37,11 @@ const customDarkTheme = {
     secondaryContainer: '#BF360C',
     tertiary: '#FF5722',
     tertiaryContainer: '#BF360C',
+    onSurface: '#E6E1E5',
+    onSurfaceVariant: '#CAC4D0',
+    onPrimary: '#FFFFFF',
+    onPrimaryContainer: '#FFCCBC',
+    onBackground: '#E6E1E5',
   },
 };
 
@@ -45,8 +55,8 @@ const {DarkTheme: NavigationDarkThemeAdapted} = adaptNavigationTheme({
   reactNavigationDark: NavigationDarkTheme,
 });
 
-const CombinedLightTheme = merge(customLightTheme, NavigationLightTheme);
-const CombinedDarkTheme = merge(customDarkTheme, NavigationDarkThemeAdapted);
+const CombinedLightTheme = merge(NavigationLightTheme, customLightTheme);
+const CombinedDarkTheme = merge(NavigationDarkThemeAdapted, customDarkTheme);
 
 export {
   CombinedLightTheme,
