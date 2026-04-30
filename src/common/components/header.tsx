@@ -1,5 +1,5 @@
 import { Image, View } from "react-native";
-import { Text, Appbar, IconButton } from "react-native-paper";
+import { Text, Divider, IconButton } from "react-native-paper";
 import { StyleSheet } from 'react-native';
 import { PreferencesContext } from '../../theme/PreferencesContext';
 import { useContext } from "react";
@@ -7,16 +7,23 @@ import { useContext } from "react";
 export default function Header() {
     const { toggleTheme, isThemeDark } = useContext(PreferencesContext);
 
-    return (<View style={styles.header}>
-        <View style={styles.leftContainer}>
-            <Image
-                source={require('../../../assets/images/logo.png')}
-                style={styles.logo}
-            />
-            <Text style={styles.title}>SketchMe</Text>
+    return (
+        <View>
+            <View style={styles.header}>
+                <View style={styles.leftContainer}>
+                    <Image
+                        source={require('../../../assets/images/logo.png')}
+                        style={styles.logo}
+                    />
+                    <Text style={styles.title}>SketchMe</Text>
+                </View>
+                <View style={{ justifyContent: 'flex-end' }}>
+                    <IconButton icon="brightness-6" onPress={() => toggleTheme()} />
+                </View>
+            </View>
+            <Divider />
         </View>
-        <IconButton icon="brightness-6" onPress={() => toggleTheme()} />
-    </View>);
+    );
 }
 
 const styles = StyleSheet.create({
@@ -24,8 +31,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         position: 'relative',
         width: '100%',
     },
