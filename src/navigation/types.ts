@@ -1,6 +1,7 @@
 export type RootStackParamList = {
   MainTabs: undefined;
   SketchScreen: undefined;
+  ImageEditorScreen: { imageUri: string };
 };
 
 export type TabParamList = {

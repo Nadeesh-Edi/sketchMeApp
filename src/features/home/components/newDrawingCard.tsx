@@ -1,11 +1,45 @@
 import { Image, StyleSheet, View } from "react-native";
 import React from "react";
 import { Button, Card, Text } from "react-native-paper";
+import { launchImageLibrary, launchCamera, Asset } from "react-native-image-picker";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { commonStyles } from "../../../common/styles";
 import { PreferencesContext } from "../../../theme/PreferencesContext";
+import type { RootStackParamList } from "../../../navigation/types";
 
 export default function NewDrawingCard() {
   const { isThemeDark } = React.useContext(PreferencesContext);
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  const handleUploadImage = async () => {
+    const result = await launchImageLibrary({
+      mediaType: "photo",
+      selectionLimit: 1,
+    });
+
+    if (result.assets && result.assets.length > 0) {
+      const asset: Asset = result.assets[0];
+      if (asset.uri) {
+        navigation.navigate("ImageEditorScreen", { imageUri: asset.uri });
+      }
+    }
+  };
+
+  const handleTakePhoto = async () => {
+    const result = await launchCamera({
+      mediaType: "photo",
+      cameraType: "back",
+      saveToPhotos: true,
+    });
+
+    if (result.assets && result.assets.length > 0) {
+      const asset: Asset = result.assets[0];
+      if (asset.uri) {
+        navigation.navigate("ImageEditorScreen", { imageUri: asset.uri });
+      }
+    }
+  };
 
   return (
     <View style={{marginTop: 50}}>
@@ -25,6 +59,7 @@ export default function NewDrawingCard() {
               buttonColor={isThemeDark ? "#FFFFFF" : "#000000"} 
               textColor={isThemeDark ? "#000000" : "#FFFFFF"}
               rippleColor="#777777"
+              onPress={handleUploadImage}
             >
               UPLOAD IMAGE
             </Button>
@@ -34,6 +69,7 @@ export default function NewDrawingCard() {
               style={styles.takePhotoButton} 
               textColor={isThemeDark ? "#FFFFFF" : "#000000"} 
               rippleColor="#777777"
+              onPress={handleTakePhoto}
             >
               TAKE PHOTO
             </Button>
