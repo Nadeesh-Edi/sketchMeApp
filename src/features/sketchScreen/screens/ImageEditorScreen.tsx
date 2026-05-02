@@ -65,7 +65,7 @@ export default function ImageEditorScreen({ route }: any) {
 
   return (
     <SafeAreaView>
-      <Header />
+      <Header isBackButton={true} />
       <View style={commonStyles.page}>
         <Text style={[styles.subTitle, { color: theme.colors.primary }]}>PROCESSING COMPLETE</Text>
         <Text style={commonStyles.mainTitle}>Sketch Preview</Text>

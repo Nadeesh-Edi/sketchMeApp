@@ -1,25 +1,30 @@
 import { Image, View } from "react-native";
 import { Text, Divider, IconButton } from "react-native-paper";
 import { StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { PreferencesContext } from '../../theme/PreferencesContext';
 import { useContext } from "react";
 
-export default function Header() {
-    const { toggleTheme, isThemeDark } = useContext(PreferencesContext);
+export default function Header({ isBackButton: _isBackButton = false }) {
+    const navigation = useNavigation();
+    const { toggleTheme } = useContext(PreferencesContext);
+
+    const goBack = () => {
+        navigation.goBack();
+    }
 
     return (
         <View>
-            <View style={styles.header}>
-                <View style={styles.leftContainer}>
+            <View style={[styles.header, { paddingHorizontal: _isBackButton ? 5 : 20 }]}>
+                <View style={styles.leftSection}>
+                    { _isBackButton && <IconButton icon="chevron-left" onPress={goBack} size={30} /> }
                     <Image
                         source={require('../../../assets/images/logo.png')}
                         style={styles.logo}
                     />
                     <Text style={styles.title}>SketchMe</Text>
                 </View>
-                <View style={{ justifyContent: 'flex-end' }}>
-                    <IconButton icon="brightness-6" onPress={() => toggleTheme()} />
-                </View>
+                <IconButton icon="brightness-6" onPress={() => toggleTheme()} />
             </View>
             <Divider />
         </View>
@@ -31,21 +36,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        position: 'relative',
+        paddingVertical: 5,
         width: '100%',
     },
     title: {
         fontSize: 20,
     },
-    leftContainer: {
+    leftSection: {
         flexDirection: 'row',
         alignItems: 'center',
     },
     logo: {
-        width: 20, // Set a specific width
-        height: 20, // Set a specific height
-        marginRight: 10, // Add spacing between image and text
+        width: 20,
+        height: 20,
+        marginRight: 10,
         resizeMode: 'contain',
     },
 });
